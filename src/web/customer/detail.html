@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>顧客詳細</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4">顧客詳細</h2>
+    <table class="table">
+      <tbody id="customer-detail">
+        <!-- 顧客詳細がここに表示されます -->
+      </tbody>
+    </table>
+    <a href="list.html" class="btn btn-secondary">一覧に戻る</a>
+  </div>
+
+  <script type="module">
+    import config from '../config.js';
+
+    const params = new URLSearchParams(window.location.search);
+    const customerId = params.get('id');
+
+    if (!customerId) {
+      alert("顧客IDが指定されていません。");
+      window.location.href = "list.html";
+    }
+
+    fetch(`${config.apiUrl}/customer/${customerId}`)
+      .then(response => response.json())
+      .then(data => {
+        const table = document.getElementById("customer-detail");
+        for (const key in data) {
+          const row = document.createElement("tr");
+          row.innerHTML = `<th>${key}</th><td>${data[key]}</td>`;
+          table.appendChild(row);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("詳細の取得に失敗しました。");
+        window.location.href = "list.html";
+      });
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+

@@ -3,9 +3,10 @@ const app = express();
 const port = 3000;
 
 app.get('/', (req, res) => {
-  res.send('Hello, Wor');
+  res.send('Hello, World!');
 });
 
-app.listen(port, '0.0.0.0', () => {
+app.listen(port, '0.0.0.0',() => {
   console.log(`Express app listening at http://localhost:${port}`);
 });
+// 0.0.0.0のアドレスを入れないと外部からアクセスできない
