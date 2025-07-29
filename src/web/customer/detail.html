@@ -59,7 +59,7 @@
       if (!confirm("削除していいですか？")) return;
 
       try {
-        const response = await fetch(`${config.apiUrl}/customer/${customerId}`, {
+        const response = await fetch(`${config.apiUrl}/api/customer/${customerId}`, {
           method: "DELETE",
         });
 
