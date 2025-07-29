@@ -55,7 +55,7 @@ app.use(express.static(path.join(__dirname, 'src/web')));
 app.get("/customer/:id", async (req, res) => {
   try {
     const customerId = req.params.id;
-    const result = await pool.query("SELECT * FROM customers WHERE id = $1", [customerId]);
+    const result = await pool.query("SELECT * FROM customers WHERE customer_id = $1", [customerId]);
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "顧客が見つかりません" });
     }
@@ -65,4 +65,18 @@ app.get("/customer/:id", async (req, res) => {
     res.status(500).json({ error: "サーバーエラー" });
   }
 });
+
+app.delete('/api/customer/:id', async (req, res) => {
+  try {
+    const result = await pool.query(
+      'DELETE FROM customers WHERE customer_id = $1',
+      [req.params.id]
+    );
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false });
+  }
+});
+
 

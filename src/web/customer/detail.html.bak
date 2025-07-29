@@ -1,4 +1,3 @@
-<!-- detail.html -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -15,11 +14,7 @@
         <!-- 顧客詳細がここに表示されます -->
       </tbody>
     </table>
-    <div class="d-flex gap-2">
-      <a href="list.html" class="btn btn-secondary">一覧に戻る</a>
-      <button id="delete-button" class="btn btn-danger">顧客を削除</button>
-      <a id="edit-button" class="btn btn-primary">顧客情報を編集</a>
-    </div>
+    <a href="list.html" class="btn btn-secondary">一覧に戻る</a>
   </div>
 
   <script type="module">
@@ -33,13 +28,9 @@
       window.location.href = "list.html";
     }
 
-    let customerData = {};
-
-    // 顧客情報の取得
     fetch(`${config.apiUrl}/customer/${customerId}`)
       .then(response => response.json())
       .then(data => {
-        customerData = data;
         const table = document.getElementById("customer-detail");
         for (const key in data) {
           const row = document.createElement("tr");
@@ -52,37 +43,6 @@
         alert("詳細の取得に失敗しました。");
         window.location.href = "list.html";
       });
-
-
-　　// 削除処理
-    document.getElementById("delete-button").addEventListener("click", async () => {
-      if (!confirm("削除していいですか？")) return;
-
-      try {
-        const response = await fetch(`${config.apiUrl}/customer/${customerId}`, {
-          method: "DELETE",
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-          alert("顧客を削除しました。");
-          window.location.href = "list.html";
-        } else {
-          alert("削除に失敗しました。");
-        }
-      } catch (error) {
-        console.error(error);
-        alert("通信エラーが発生しました。");
-      }
-    });
-
-
-　　// 更新処理
-    document.getElementById("edit-button").addEventListener("click", () => {
-      const query = new URLSearchParams(customerData).toString();
-      window.location.href = `update.html?${query}`;
-    });
   </script>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

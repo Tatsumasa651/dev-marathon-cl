@@ -45,7 +45,7 @@
             const cell4 = row.insertCell(3);
             cell1.textContent = customer.company_name;
             //cell2.textContent = customer.industry;
-	    cell2.innerHTML = `<a href="detail.html?id=${customer.id}">${customer.companyname}</a>`;
+	    cell2.innerHTML = `<a href="detail.html?id=${customer.customer_id}">${customer.industry}</a>`;
             cell3.textContent = customer.contact;
             cell4.textContent = customer.location;
           });
