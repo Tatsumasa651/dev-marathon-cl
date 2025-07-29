@@ -1,22 +1,65 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>案件情報入力</title>
-    <!-- Bootstrap CSSの読み込み -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>顧客情報確認</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <!-- ここにHTMLを書く -->
+  <div class="container mt-5">
+    <h2 class="mb-4">編集内容の確認</h2>
+    <table class="table">
+      <tbody id="confirm-table"></tbody>
+    </table>
+    <div class="d-flex gap-2">
+      <button id="submit-button" class="btn btn-success">更新する</button>
+      <button class="btn btn-secondary" onclick="history.back()">戻る</button>
     </div>
-    <script type="module">
-        <!-- ここにJSを書く -->
-    </script>
-    <!-- BootstrapのJavaScriptの読み込み -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </div>
+
+  <script type="module">
+    import config from '../config.js';
+
+    const params = new URLSearchParams(window.location.search);
+    const customerId = params.get("customer_id");
+
+    const table = document.getElementById("confirm-table");
+    const data = {
+      company_name: params.get("company_name"),
+      industry: params.get("industry"),
+      contact: params.get("contact"),
+      location: params.get("location"),
+    };
+
+    for (const key in data) {
+      const row = document.createElement("tr");
+      row.innerHTML = `<th>${key}</th><td>${data[key]}</td>`;
+      table.appendChild(row);
+    }
+
+    document.getElementById("submit-button").addEventListener("click", async () => {
+      try {
+        const res = await fetch(`${config.apiUrl}/customer/${customerId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+
+        if (result.success) {
+          alert("更新に成功しました。");
+          window.location.href = `detail.html?id=${customerId}`;
+        } else {
+          alert("更新に失敗しました。");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("通信エラーが発生しました。");
+      }
+    });
+  </script>
 </body>
 </html>
+

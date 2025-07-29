@@ -79,4 +79,18 @@ app.delete('/api/customer/:id', async (req, res) => {
   }
 });
 
+app.put('/customer/:id', async (req, res) => {
+  const { company_name, industry, contact, location } = req.body;
+  try {
+    await pool.query(
+      'UPDATE customers SET company_name = $1, industry = $2, contact = $3, location = $4 WHERE customer_id = $5',
+      [company_name, industry, contact, location, req.params.id]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false });
+  }
+});
+
 
