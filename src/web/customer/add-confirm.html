@@ -36,7 +36,7 @@
       document.getElementById('confirm-location').textContent = formData.location;
     } else {
       alert("入力内容が見つかりません。最初からやり直してください。");
-      window.location.href = '/customer/add.html';
+      window.location.href = 'add.html';
     }
 
     document.getElementById('submitBtn').addEventListener('click', () => {
@@ -50,7 +50,7 @@
         if (data.success) {
           alert('顧客情報が登録されました。');
           localStorage.removeItem('customerForm');
-          window.location.href = '/customer/list.html';
+          window.location.href = 'list.html';
         } else {
           alert('登録に失敗しました。');
         }
