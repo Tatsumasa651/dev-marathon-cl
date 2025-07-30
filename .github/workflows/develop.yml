@@ -14,4 +14,4 @@ jobs:
           SSH_PORT: ${{ secrets.DEV_SSH_PORT }}
           SSH_USER: ${{ secrets.DEV_SSH_USER }}
           SSH_KEY: ${{ secrets.DEV_SSHE_SSH_KEY }}
-      - run: ssh ${{ steps.ssh.outputs.SERVER }} bash /app/自分のユーザ名/deploy.sh tatsumasa_nakano
+      - run: ssh ${{ steps.ssh.outputs.SERVER }} bash /app/tatsumasa_nakano/deploy.sh tatsumasa_nakano
