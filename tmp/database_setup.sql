@@ -1,3 +1,4 @@
+-- 本番環境用
 -- 顧客テーブルの作成
 CREATE TABLE customers (
     customer_id SERIAL PRIMARY KEY,
