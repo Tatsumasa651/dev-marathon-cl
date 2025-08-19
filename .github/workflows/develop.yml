@@ -17,6 +17,9 @@ jobs:
           SSH_USER: ${{ secrets.DEV_SSH_USER }}
           SSH_KEY: ${{ secrets.DEV_SSHE_SSH_KEY }}
       - run: ssh ${{ steps.ssh.outputs.SERVER }} "ENVIRONMENT=staging" bash /app/tatsumasa_nakano/deploy.sh tatsumasa_nakano 
+        env:
+          STAGING_DB_PASSWORD: ${{ secrets.STAGING_DB_PASSWORD }}
+
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -28,3 +31,5 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSHE_SSH_KEY }}
       - run: ssh ${{ steps.ssh.outputs.SERVER }} "ENVIRONMENT=production" bash /app/tatsumasa_nakano/deploy.sh tatsumasa_nakano
+        env:
+          PROD_DB_PASSWORD: ${{ secrets.PROD_DB_PASSWORD }}
